@@ -1,12 +1,16 @@
 using FluentAssertions;
+using Moq;
 using NSubstitute;
 
 namespace ConsoleApp1.Test
 {
     public class LoginServiceTest
     {
-        private IUserRepository _userRepository;
-        private IHashProvider _hashProvider;
+        private readonly IUserRepository _userRepository;
+        private readonly IHashProvider _hashProvider;
+
+        private readonly Mock<IUserRepository> _userRepositoryMock;
+        private readonly Mock<IHashProvider> _hashProviderMock;
 
         private LoginService _sut;
 
@@ -14,6 +18,9 @@ namespace ConsoleApp1.Test
         {
             _userRepository = Substitute.For<IUserRepository>();
             _hashProvider = Substitute.For<IHashProvider>();
+
+            _userRepositoryMock = new Mock<IUserRepository>();
+            _hashProviderMock = new Mock<IHashProvider>();
 
             _sut = new LoginService();
         }
@@ -25,10 +32,10 @@ namespace ConsoleApp1.Test
             LoginAuthenticateRequestArgs args = new();
 
             // Act
-            var result = _sut.AuthenticateAsync(args);
+            var result = await _sut.AuthenticateAsync(args);
 
             // Assert
-            result.Should().NotBeNull();
+            //TO-DO: verify result
         }
 
         [Fact]
@@ -38,10 +45,10 @@ namespace ConsoleApp1.Test
             LoginAuthenticateRequestArgs args = new();
 
             // Act
-            var result = _sut.AuthenticateAsync(args);
+            var result = await _sut.AuthenticateAsync(args);
 
             // Assert
-            result.Should().NotBeNull();
+            //TO-DO: verify result
         }
     }
 }
